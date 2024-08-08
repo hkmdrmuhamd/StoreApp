@@ -1,0 +1,1 @@
+namespace StoreApp.Web.Models;
