@@ -1,5 +1,11 @@
 @model ProductListViewModel
 
+<h5>Selam sana demir pençe</h5>
+
+@if (Model.Products.Count() == 0)
+{
+    <p>Ürün bulunamadı</p>
+}
 
 @foreach (var p in Model.Products)
 {
@@ -10,4 +16,3 @@
         <p>@p.Category</p>
     </div>
 }
-<h5>Selam sana demir pençe</h5>
