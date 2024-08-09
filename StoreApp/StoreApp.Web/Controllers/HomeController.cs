@@ -24,7 +24,6 @@ public class HomeController : Controller
                 Name = p.Name,
                 Description = p.Description,
                 Price = p.Price,
-                Category = p.Category
             }).Take(pageSize);
 
         return View(new ProductListViewModel
