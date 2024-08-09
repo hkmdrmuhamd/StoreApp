@@ -29,8 +29,14 @@ public class HomeController : Controller
 
         return View(new ProductListViewModel
         {
-            Products = products
-        });
+            Products = products,
+            PageInfo = new PageInfo
+            {
+                TotalItems = _storeRepository.Products.Count(),
+                ItemsPerPage = pageSize
+            }
+        }
+        );
     }
 
 }

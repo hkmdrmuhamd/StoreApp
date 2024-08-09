@@ -9,7 +9,16 @@ public class ProductViewModel
     public string Category { get; set; } = string.Empty;
 }
 
-public class ProductListViewModel
+public class ProductListViewModel //Product bilgisini list şekilnde göndermemizi sağlar.
 {
     public IEnumerable<ProductViewModel> Products { get; set; } = Enumerable.Empty<ProductViewModel>();
+    public PageInfo PageInfo { get; set; } = new();
+}
+
+public class PageInfo
+{
+    public int TotalItems { get; set; }
+    public int ItemsPerPage { get; set; }
+    public int CurrentPage { get; set; }
+    public int TotalPages => (int)Math.Ceiling((decimal)TotalItems / ItemsPerPage); //Toplam oluşturulacak sayfa sayısı (kesirli değerler çıktığında bunu bir üst değere yuvarlar)
 }
