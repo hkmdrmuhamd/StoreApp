@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StoreApp.Data.Abstract;
 using StoreApp.Web.Models;
 
@@ -12,26 +13,22 @@ public class HomeController : Controller
     {
         _storeRepository = storeRepository;
     }
-    public IActionResult Index(int page = 1)
+    public IActionResult Index(string category, int page = 1)
     {
-        var products = _storeRepository
-        .Products
-        .Skip((page - 1) * pageSize) //Database'deki kayıtları öteleme işlemidir.(Örneğin sayfa 2 olduğunda ilk 3 kaydı atlar ve sonraki 3 kaydı gösterir)
-        .Select(p =>
-            new ProductViewModel
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Description = p.Description,
-                Price = p.Price,
-            }).Take(pageSize);
-
+        ;
         return View(new ProductListViewModel
         {
-            Products = products,
+            Products = _storeRepository.GetProductsByCategory(category, page, pageSize).Select(p =>
+                    new ProductViewModel
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Description = p.Description,
+                        Price = p.Price,
+                    }),
             PageInfo = new PageInfo
             {
-                TotalItems = _storeRepository.Products.Count(),
+                TotalItems = _storeRepository.GetProductCount(category),
                 ItemsPerPage = pageSize,
                 CurrentPage = page
             }
